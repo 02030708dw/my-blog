@@ -1,5 +1,10 @@
 <template>
-  <div class="home-container" ref="container" @wheel="handRoll">
+  <div
+    v-loading="isLoading"
+    class="home-container"
+    ref="container"
+    @wheel="handRoll"
+  >
     <ul
       class="carousel-container"
       :style="{
@@ -8,7 +13,7 @@
       @transitionend="handleTransitionend"
     >
       <li v-for="i in banners" :key="i.id">
-        <Carouselitem :carousel="i"/>
+        <Carouselitem :carousel="i" />
       </li>
     </ul>
     <div @click="switchTo(index - 1)" v-show="index >= 1" class="icon icon-up">
@@ -44,6 +49,7 @@ export default {
   data() {
     return {
       banners: [],
+      isLoading: true,
       index: 0, //当前显示的是第几张轮播图
       containerHeight: 0, //整个容器的高度
       switching: false, // 是否正在切换中
@@ -51,15 +57,16 @@ export default {
   },
   async created() {
     this.banners = await getBanners();
+    this.isLoading = false;
   },
   mounted() {
     this.containerHeight = this.$refs.container.clientHeight;
     //监听浏览器视口变化的重新渲染页面内容
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener("resize", this.handleResize);
   },
   beforeDestroy() {
     //移除原来的监听事件
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener("resize", this.handleResize);
   },
   computed: {
     marginTop() {
@@ -71,10 +78,10 @@ export default {
       this.index = i;
     },
     handRoll(e) {
-      if(this.switching){
-        return
+      if (this.switching) {
+        return;
       }
-      if (e.deltaY > 5 && this.index < this.banners.length -1) {
+      if (e.deltaY > 5 && this.index < this.banners.length - 1) {
         // 向下滚动
         this.switching = true;
         this.index++;
@@ -84,12 +91,12 @@ export default {
         this.index--;
       }
     },
-    handleTransitionend(){
+    handleTransitionend() {
       this.switching = false;
     },
-    handleResize(){
+    handleResize() {
       this.containerHeight = this.$refs.container.clientHeight;
-    }
+    },
   },
 };
 </script>
