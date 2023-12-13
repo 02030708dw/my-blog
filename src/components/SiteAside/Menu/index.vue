@@ -6,7 +6,6 @@
       :to="{name:item.name}"
       :key="item.name"
       active-class="active"
-      exact-active-class=""
     >
       <div class="icon">
         <Icon :type="item.icon" />

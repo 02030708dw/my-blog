@@ -26,7 +26,7 @@
         <span>2632454453</span>
       </a>
       <div class="pop">
-        <img src="https://tucdn.wpon.cn/2023/06/04/b5d912811d129.jpg" alt="" />
+        <img src="https://pic.ziyuan.wang/2023/12/06/guest_9cea23cd6f29d.jpg" alt="" />
       </div>
     </li>
     <li>
@@ -37,7 +37,7 @@
         <span>微信</span>
       </a>
       <div class="pop">
-        <img src="https://tucdn.wpon.cn/2023/06/04/34f0c1c44b92c.png" alt="" />
+        <img src="https://pic.ziyuan.wang/2023/12/06/guest_897b6c5b15f70.png" alt="" />
       </div>
     </li>
   </ul>

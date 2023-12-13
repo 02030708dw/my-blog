@@ -1,6 +1,6 @@
 <template>
   <div class="site-aside-container">
-    <Avatar url="https://tucdn.wpon.cn/2023/06/06/3468b4a818a2e.jpg" />
+    <Avatar url="https://pic.ziyuan.wang/2023/12/06/guest_c08d46095afda.jpg" />
     <h1 class="title">Dk</h1>
     <Menu />
     <Contact />

@@ -1,24 +1,26 @@
 <template>
-  <div style="position: relative;">
-    <Loading v-if="isLoading"/>
-    <button @click="isLoading = !isLoading">切换显示/隐藏</button>
-  </div>
+  <Layout>
+    <BlogList />
+    <template #right>
+      <BlogCategory />
+    </template>
+  </Layout>
 </template>
 
 <script>
-import Loading from '@/components/Loading'
+import Layout from "@/components/Layout";
+import BlogList from "./components/BlogList";
+import BlogCategory from "./components/BlogCategory";
 export default {
-  components:{
-    Loading
+  components: {
+    Layout,
+    BlogList,
+    BlogCategory,
   },
-  data(){
-    return{
-      isLoading: true,
-    }
-  }
-}
+  created() {
+    console.log(this.$route);
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
