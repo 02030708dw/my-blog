@@ -14,3 +14,21 @@ new Vue({
   router,
   render: h => h(App),
 }).$mount('#app')
+
+// import * as blogApi from '@/api/blog';
+
+// blogApi.getBlogId('asdf').then(res => {
+//   console.log(res);
+// })
+
+// blogApi.getBlogComment({
+//   nickname: '张三',
+//   content: '评论内容，纯文本',
+//   blogId: '123456'
+// }).then(res => {
+//   console.log(res);
+// })
+
+// blogApi.getBlogCommentList().then(res => {
+//   console.log(res);
+// })

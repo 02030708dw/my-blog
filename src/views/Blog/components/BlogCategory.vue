@@ -1,7 +1,7 @@
 <template>
   <div class="blog-category-container" v-loading="isLoading">
     <!-- 博客分类 -->
-    <h2 class="blog-category">123</h2>
+    <h2 class="blog-category">文章分类</h2>
     <RightList :list="list" @select="handleClick" />
   </div>
 </template>

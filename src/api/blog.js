@@ -25,3 +25,22 @@ export async function getBlog(page = 1, limit = 10, categoryid = -1) {
 export async function getBlogType() {
   return await request.get('/api/blogtype')
 }
+
+
+export async function getBlogId(id) {
+  return await request.get(`/api/blog/${id}`)
+}
+
+export async function getBlogComment(commentInfo) {
+  return await request.post('/api/comment', commentInfo)
+}
+
+export async function getBlogCommentList(page = 1, limit = 10, blogid) {
+  return await request.get('/api/comment', {
+    params: {
+      page,
+      limit,
+      blogid
+    }
+  })
+}
