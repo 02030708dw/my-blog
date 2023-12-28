@@ -2,6 +2,7 @@
   <Layout>
     <div class="main-container" v-loading="isLoading">
       <BlogDetail :blog="data" v-if="data" />
+      <BlogComment v-if="!isLoading" />
     </div>
     <template #right>
       <div class="right-container" v-loading="isLoading">
@@ -13,34 +14,40 @@
 
 <script>
 import fetchData from "@/mixins/fetchData";
-import { getBlogId } from "@/api/blog";
+import { getBlog } from "@/api/blog";
 import Layout from "@/components/Layout";
 import BlogDetail from "./components/BlogDetail";
 import BlogTOC from "./components/BlogTOC";
-import "highlight.js/styles/github.css";
+import BlogComment from "./components/BlogComment";
+
 export default {
+  components: {
+    Layout,
+    BlogDetail,
+    BlogTOC,
+    BlogComment,
+  },
   mixins: [fetchData(null)],
-  components: { Layout, BlogDetail, BlogTOC },
   methods: {
     async fetchData() {
-      return await getBlogId(this.$route.params.id);
+      return await getBlog(this.$route.params.id);
     },
   },
 };
 </script>
 
-<style lang="less" scoped>
-@import "~@/styles/markdown.css";
+<style scoped lang="less">
 .main-container {
   overflow-y: scroll;
   height: 100%;
-  padding: 20px;
   box-sizing: border-box;
+  padding: 20px;
   position: relative;
+  width: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
-.right-container{
+.right-container {
   width: 300px;
   height: 100%;
   overflow-y: scroll;

@@ -1,34 +1,35 @@
 <template>
   <div class="blog-toc-container">
     <h2>目录</h2>
-    <RightList :list="toc" @select="handleSelect"/>
+    <RightList :list="toc" @select="handleSelect" />
   </div>
 </template>
 
 <script>
 import RightList from "./RightList";
 export default {
-  components: { RightList },
+  components: {
+    RightList,
+  },
   props: {
     toc: {
       type: Array,
     },
   },
-  methods:{
-    handleSelect(item){
-      console.log(item);
+  methods: {
+    handleSelect(item) {
       location.hash = item.anchor;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .blog-toc-container {
   h2 {
     font-weight: bold;
     letter-spacing: 2px;
-    font-size: 1rem;
+    font-size: 1em;
     margin: 0;
   }
 }

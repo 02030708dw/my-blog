@@ -17,9 +17,6 @@ export default {
     BlogList,
     BlogCategory,
   },
-  created() {
-    console.log(this.$route);
-  },
 };
 </script>
 

@@ -1,18 +1,19 @@
 <template>
   <div class="blog-category-container" v-loading="isLoading">
-    <!-- 博客分类 -->
-    <h2 class="blog-category">文章分类</h2>
-    <RightList :list="list" @select="handleClick" />
+    <h2>文章分类</h2>
+    <RightList :list="list" @select="handleSelect" />
   </div>
 </template>
 
 <script>
 import RightList from "./RightList";
-import fetchData from "@/mixins/fetchData";
-import { getBlogType } from "@/api/blog";
+import fetchData from "@/mixins/fetchData.js";
+import { getBlogCategories } from "@/api/blog.js";
 export default {
   mixins: [fetchData([])],
-  components: { RightList },
+  components: {
+    RightList,
+  },
   computed: {
     categoryId() {
       return +this.$route.params.categoryId || -1;
@@ -22,14 +23,14 @@ export default {
     },
     list() {
       const totalArticleCount = this.data.reduce(
-        (acc, cur) => acc + cur.articleCount,
+        (a, b) => a + b.articleCount,
         0
       );
+
       const result = [
         { name: "全部", id: -1, articleCount: totalArticleCount },
         ...this.data,
       ];
-
       return result.map((it) => ({
         ...it,
         isSelect: it.id === this.categoryId,
@@ -39,15 +40,15 @@ export default {
   },
   methods: {
     async fetchData() {
-      return await getBlogType();
+      return await getBlogCategories();
     },
-    handleClick(item) {
+    handleSelect(item) {
       const query = {
         page: 1,
         limit: this.limit,
       };
+      // 跳转到 当前的分类id  当前的页容量  newPage的页码
       if (item.id === -1) {
-        //当前没有分类
         this.$router.push({
           name: "Blog",
           query,
@@ -55,8 +56,10 @@ export default {
       } else {
         this.$router.push({
           name: "CategoryBlog",
-          params: { categoryId: item.id },
           query,
+          params: {
+            categoryId: item.id,
+          },
         });
       }
     },
@@ -64,18 +67,18 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .blog-category-container {
   width: 300px;
   box-sizing: border-box;
   padding: 20px;
   position: relative;
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
   h2 {
     font-weight: bold;
     letter-spacing: 2px;
-    font-size: 1rem;
+    font-size: 1em;
     margin: 0;
   }
 }

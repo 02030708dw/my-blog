@@ -3,7 +3,7 @@
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
-          <router-link
+          <RouterLink
             :to="{
               name: 'BlogDetail',
               params: {
@@ -12,10 +12,10 @@
             }"
           >
             <img :src="item.thumb" :alt="item.title" :title="item.title" />
-          </router-link>
+          </RouterLink>
         </div>
         <div class="main">
-          <router-link
+          <RouterLink
             :to="{
               name: 'BlogDetail',
               params: {
@@ -24,20 +24,21 @@
             }"
           >
             <h2>{{ item.title }}</h2>
-          </router-link>
+          </RouterLink>
           <div class="aside">
             <span>日期：{{ formatDate(item.createDate) }}</span>
             <span>浏览：{{ item.scanNumber }}</span>
-            <span>评论{{ item.commentNumber }}</span>
-            <router-link
+            <span>评论：{{ item.commentNumber }}</span>
+            <RouterLink
               :to="{
                 name: 'CategoryBlog',
                 params: {
                   categoryId: item.category.id,
                 },
               }"
-              >{{ item.category.name }}</router-link
             >
+              {{ item.category.name }}
+            </RouterLink>
           </div>
           <div class="desc">
             {{ item.description }}
@@ -51,6 +52,7 @@
       :current="routeInfo.page"
       :total="data.total"
       :limit="routeInfo.limit"
+      :visibleNumber="10"
       @pageChange="handlePageChange"
     />
   </div>
@@ -58,11 +60,10 @@
 
 <script>
 import Pager from "@/components/Pager";
-import fetchData from "@/mixins/fetchData";
-import { getBlog } from "@/api/blog";
+import fetchData from "@/mixins/fetchData.js";
+import { getBlogs } from "@/api/blog.js";
 import { formatDate } from "@/utils";
 export default {
-  name: "BlogList",
   mixins: [fetchData({})],
   components: {
     Pager,
@@ -70,16 +71,20 @@ export default {
   computed: {
     // 获取路由信息
     routeInfo() {
-      const categoryId = this.$route.params.categoryId || -1;
+      const categoryId = +this.$route.params.categoryId || -1;
       const page = +this.$route.query.page || 1;
       const limit = +this.$route.query.limit || 10;
-      return { categoryId, page, limit };
+      return {
+        categoryId,
+        page,
+        limit,
+      };
     },
   },
   methods: {
     formatDate,
     async fetchData() {
-      return await getBlog(
+      return await getBlogs(
         this.routeInfo.page,
         this.routeInfo.limit,
         this.routeInfo.categoryId
@@ -90,26 +95,30 @@ export default {
         page: newPage,
         limit: this.routeInfo.limit,
       };
+      // 跳转到 当前的分类id  当前的页容量  newPage的页码
       if (this.routeInfo.categoryId === -1) {
-        //当前没有分类
+        // 当前没有分类
+        // /article?page=${newPage}&limit=${this.routeInfo.limit}
         this.$router.push({
           name: "Blog",
           query,
         });
       } else {
+        // /article/cate/${this.routeInfo.categoryId}?page=${newPage}&limit=${this.routeInfo.limit}
         this.$router.push({
           name: "CategoryBlog",
-          path: this.routeInfo.categoryId,
           query,
+          params: {
+            categoryId: this.routeInfo.categoryId,
+          },
         });
       }
     },
   },
   watch: {
-    //this.$route 监听路由变化
     async $route() {
       this.isLoading = true;
-      //滚动高度为0
+      // 滚动高度为0
       this.$refs.container.scrollTop = 0;
       this.data = await this.fetchData();
       this.isLoading = false;

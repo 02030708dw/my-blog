@@ -2,9 +2,9 @@
   <div class="blog-detail-container">
     <h1>{{ blog.title }}</h1>
     <div class="aside">
-      <span>日期：{{ formatDate(blog.createDate) }}</span>
-      <span>浏览：{{ blog.scanNumber }}</span>
-      <a href="">评论：{{ blog.commentNumber }}</a>
+      <span>日期: {{ formatDate(blog.createDate) }}</span>
+      <span>浏览: {{ blog.scanNumber }}</span>
+      <a href="#data-form-container">评论: {{ blog.commentNumber }}</a>
       <a href="">{{ blog.category.name }}</a>
     </div>
     <div v-html="blog.htmlContent" class="markdown-body"></div>
@@ -13,6 +13,8 @@
 
 <script>
 import { formatDate } from "@/utils";
+import "highlight.js/styles/github.css";
+import "@/styles/markdown.css";
 export default {
   props: {
     blog: {
@@ -26,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 @import "~@/styles/var.less";
 .aside {
   font-size: 12px;
