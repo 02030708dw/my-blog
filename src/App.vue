@@ -10,20 +10,22 @@
         <RouterView />
       </template>
     </Layout>
+    <ToTop />
   </div>
 </template>
 
 <script>
 import Layout from "./components/Layout";
 import SiteAside from "./components/SiteAside";
+import ToTop from "./components/ToTop";
 export default {
-  components:{
+  components: {
     Layout,
-    SiteAside
+    SiteAside,
+    ToTop,
   },
-  methods:{
-  }
-}
+  methods: {},
+};
 </script>
 
 <style lang="less" scoped>

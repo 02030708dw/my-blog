@@ -4,11 +4,14 @@ import router from './router';
 import './styles/global.less'
 import './mock'
 import showMessage from './utils/showMessage'
+import './eventBus';
 Vue.prototype.$showMessage = showMessage
 
 //注册全局指令
 import vloading from '@/directives/loading'
 Vue.directive('loading', vloading);
+import lazy from '@/directives/lazy'
+Vue.directive('lazy', lazy);
 
 new Vue({
   router,
